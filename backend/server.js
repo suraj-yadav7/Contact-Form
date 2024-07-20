@@ -5,6 +5,7 @@ import cors from 'cors'
 import connectDB from './db.js'
 import morgan from 'morgan'
 import adminRouter from './routes/adminRoute.js'
+import contactRouter from './routes/contactFormRoute.js'
 
 const app = express()
 dotenv.config()
@@ -25,13 +26,10 @@ const corsOption={
     optionSuccessStatus:200
 };
 
-app.use((req,res,next)=>{
-    console.log("req url: ", req.url)
-    next()
-})
 
 app.use(cors(corsOption));
 app.use("/admin", adminRouter)
+app.use("/form", contactRouter)
 
 app.get("/", (req, res)=>{
     res.send("<h1>User Contact Forms </h1>")

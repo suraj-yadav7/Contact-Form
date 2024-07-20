@@ -10,8 +10,8 @@ const FORMSCHEMA= new mongoose.Schema({
         required:true
     },
     phone:{
-        type:Number,
-        default:'--'
+        type:String,
+        default:"Not Provided"
     },
     message:{
         type:String,
@@ -19,4 +19,4 @@ const FORMSCHEMA= new mongoose.Schema({
     }
 },{timestamps:true})
 
-export const UserFrom=mongoose.model("user_form", FORMSCHEMA)
+export const ContactForm=mongoose.model("contact_form", FORMSCHEMA)
