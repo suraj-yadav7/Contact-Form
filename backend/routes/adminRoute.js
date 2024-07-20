@@ -1,9 +1,10 @@
 import express from 'express'
-import { adminLogin, adminSignup } from '../controller/admin.js';
+import {superAdminCreation,superAdminLogin } from '../controller/admin.js';
+import { adminSignupValidation, adminLoginValidation} from '../controller/inputValidation.js';
 
 const adminRouter=express.Router()
 
-adminRouter.post('/signup', adminSignup)
-adminRouter.get('/login', adminLogin)
+adminRouter.post("/create", adminSignupValidation, superAdminCreation)
+adminRouter.post("/login", adminLoginValidation, superAdminLogin)
 
 export default adminRouter;

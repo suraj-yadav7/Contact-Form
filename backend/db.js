@@ -6,7 +6,7 @@ const uri=process.env.MONGO_URI
 const connectDB=async()=>{
     try{
         let connectionInstance=await mongoose.connect(uri,{
-            dbName:'contactForm'
+            dbName:'formAPIgateway'
         })
         console.log(`Moongodb Connected at ${connectionInstance.connection.host}`.bgGreen.white)
     }

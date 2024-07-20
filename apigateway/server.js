@@ -29,12 +29,12 @@ app.use("/api", createProxyMiddleware({
     pathRewrite:{
         "/api":''
     }
-}))
+}));
 
 
 app.listen(port||3001, ()=>{
     console.log(`API_Gateway is Running at: ${port}`.bgWhite.blue)
-})
+});
 
 
 
