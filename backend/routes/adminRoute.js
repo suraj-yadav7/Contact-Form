@@ -4,7 +4,7 @@ import { adminSignupValidation, adminLoginValidation} from '../controller/inputV
 
 const adminRouter=express.Router()
 
-adminRouter.post("/create", adminSignupValidation, superAdminCreation)
+adminRouter.post("/signup", adminSignupValidation, superAdminCreation)
 adminRouter.post("/login", adminLoginValidation, superAdminLogin)
 
 export default adminRouter;

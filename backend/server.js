@@ -31,6 +31,6 @@ app.use(cors(corsOption));
 app.use("/admin", adminRouter)
 app.use("/form", contactRouter)
 
-app.get("/", (req, res)=>{
-    res.send("<h1>User Contact Forms </h1>")
-})
+// app.get("/", (req, res)=>{
+//     res.send("<h1>User Contact Forms </h1>")
+// })

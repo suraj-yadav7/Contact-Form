@@ -10,11 +10,11 @@ const Home = () => {
               <li className='pl-8 font-bold text-xl'>MRSOFT</li>
               <Link to='/login'><li className='pr-6 hover:cursor-pointer hover:text-gray-600'>AdminLogin</li></Link>
             </ul>
-        </nav>
+        </nav>  
         <ContactForm />
       </div>
     </>
   )
 }
 
-export default Home
+export default Home;
