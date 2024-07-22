@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Home from "./pages/Home"
 import AllForms from './components/AllForms'
+import {Toaster} from 'react-hot-toast'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
               <Route exact path='/login' element={<Login/>} />
               <Route exact path='/form' element={<AllForms/>} />
           </Routes>
+          <Toaster/>
       </Router>
     </>
   )

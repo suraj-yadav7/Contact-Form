@@ -8,13 +8,24 @@ const app = express()
 dotenv.config()
 const port = process.env.PORT
 const node_server_url=process.env.NODE_SERVER_URL
+const client_URL=process.env.CLIENT_URL
 app.use(morgan('dev'))
 
+// Proxy server
 const proxy= httpProxy.createProxyServer({
     target:node_server_url,
     changeOrigin:true
 });
 
+// Handle CORS option
+app.use((req, res,next)=>{
+    res.header('Access-Control-Allow-Origin', client_URL),
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'),
+    res.header('Access-Control-Allow-Headers','Origin, X-Requested-With, Content-Type, Accept, Authorization')
+    next()
+})
+
+// helper function for pathRewrite
 const setupProxy=(app, path, targetUrl)=>{
     app.use(path, (req, res)=>{
         if(req.originalUrl !== path) {
@@ -32,6 +43,7 @@ proxy.on('error', (err, req, res) => {
     console.error("Proxy Error:", err);
     res.status(500).send("Proxy Error");
 });
+
 // Setup of all proxies urls
 setupProxy(app, "/api/login", "/admin/login")
 setupProxy(app, "/api/signup", "/admin/signup")

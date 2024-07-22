@@ -20,12 +20,12 @@ export const contactFormCreate = async(req, res)=>{
 
 export const getAllContactForms=async(req, res)=>{
     try{
-        let allForms = await ContactForm.find({})
+        let allForms = await ContactForm.find({}).limit(20)
         if(allForms.length>0){
-            return res.status(200).status({status:true, message:"Fetched all user forms", forms:allForms})
+            return res.status(200).send({status:true, message:"Fetched all user forms", formsData:allForms})
         }
         else{
-            return res.status(200).status({status:true, message:"NO USER_FORM, Stack Empty"})
+            return res.status(200).send({status:true, message:"NO USER_FORM, Stack Empty"})
         }
     }
     catch(error){

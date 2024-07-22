@@ -6,7 +6,6 @@ import {SuperAdmin} from '../models/super_admin.model.js'
 // Super Admin Creation
 export const superAdminCreation = async(req,res)=>{
     let error = validationResult(req)
-    console.log("Error validation: ", error)
     if(!error.isEmpty()){
         if(error.errors[0].path==="username"){
             return res.status(400).send({status:false, message:"Username atleast 4 character long"})
@@ -37,7 +36,7 @@ export const superAdminCreation = async(req,res)=>{
                 })
 
                 let adminCreated= await newAdmin.save()
-                return res.status(200).send({status:true, message:"Super Admin Created Successfully ", adminData:{adminId:adminCreated._id.valueOf(), admin_username:adminCreated.username}})
+                return res.status(201).send({status:true, message:"Super Admin Created Successfully ", adminData:{adminId:adminCreated._id.valueOf(), admin_username:adminCreated.username}})
             }
         }
         catch(error){
@@ -50,7 +49,6 @@ export const superAdminCreation = async(req,res)=>{
 // Super Admin Login
 export const superAdminLogin= async(req, res)=>{
     let error = validationResult(req)
-    console.log("Error validation: ", error)
     if(!error.isEmpty()){
         if(error.errors[0].path==="password"){
             return res.status(400).send({status:false, message:"Wrong Password"})
@@ -78,10 +76,10 @@ export const superAdminLogin= async(req, res)=>{
                     }
                     const jwtSecret=process.env.JWT_SECRET
                     const JWTTOKEN= jwt.sign(adminJwt, jwtSecret)
-                    return res.status(200).send({status:true, message:"Admin logged Successfully", jwtToken:JWTTOKEN})
+                    return res.status(200).send({status:true, message:"Admin logged Successfully", jwtToken:JWTTOKEN, role:adminData.role})
                 }
                 else{
-                    res.status(402).send({status:false, message:"Entered Wrong Credentials"})
+                    res.status(403).send({status:false, message:"Entered Wrong Credentials"})
                 }
             }
         }

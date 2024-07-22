@@ -27,4 +27,4 @@ export const authorization=async(req, res, err)=>{
         console.log("Error occured at user authentication: ", err)
         res.status(500).json({status:false, message:"Internal server error"})
     }
-}
+};
