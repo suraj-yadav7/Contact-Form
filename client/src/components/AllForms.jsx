@@ -1,16 +1,18 @@
 import React, {useState,useEffect} from "react";
 import axios from "axios";
+import Pagination from "./Pagination";
 
-function FormComp(){
+//Child: Single form data component
+function FormComp({data}){
     return (
         <>
-            <div className="w-72 h-56 border-2 rounded-lg shadow-md border-indigo-400">
+            <div className="w-72 h-56 border-2 rounded-lg shadow-md border-indigo-400 bg-white" key={data._id}>
                 <div className="px-2 pl-4 py-8">
                     <ul className="flex flex-col gap-2">
-                        <li>FullName: username</li>
-                        <li>Email : surajyadav3@gmail.com</li>
-                        <li>Phone no: +9328u327824</li>
-                        <li>Message: THis is firsd sdfds sdfdsf ad asdsa</li>
+                        <li className="capitalize">FullName: {data.fullname}</li>
+                        <li>Email : {data.email}</li>
+                        <li>Phone no: {data.phone}</li>
+                        <li>Message: {data.message}</li>
                     </ul>
                 </div>
             </div>
@@ -18,18 +20,19 @@ function FormComp(){
     )
 }
 
-
+// Parent: All Forms container
 const AllForms=()=>{
     const [formData, setFormData] = useState("")
+    const [loading, setLoading] =useState(true)
     const base_url = import.meta.env.VITE_API_GATEWAY_URL
-
+    // fetching all forms
     const getAllForms=async()=>{
         try{
         let response = await axios.get(`${base_url}/api/form-getAll`)
-        console.log("all form: ", response)
         if(response){
             const {data}=response
             setFormData(data.formsData)
+            setLoading(false)
             }
         }
         catch(err){
@@ -37,30 +40,48 @@ const AllForms=()=>{
         }
     };
 
+    // Pagination for formlist 
+    const [currentPage, setCurrentPage] = useState(1)
+    let itemsPerPage=8
+    const startIndex = (currentPage-1)*itemsPerPage
+    const endIndex = startIndex+itemsPerPage
+    const onPageChange= (page)=>{
+        setCurrentPage(page)
+    }
+    const sliceFormList = formData.slice(startIndex, endIndex)
+
     useEffect(()=>{
         getAllForms()
     },[]);
-
-    let arr=[1,2,3,4,5,6,7,8]
-
     return (
         <>
-            <div className="flex flex-wrap justify-center items-center flex-col mt-10 ">
-            <div className="w-4/5  h-4/5 flex flex-wrap gap-5 justify-center items-center">
+            {
+                !loading ?
+                <div className="flex flex-wrap justify-center items-center flex-col h-screen ">
+            <div className="w-4/5  h-4/5  ">
+            <div className="flex flex-wrap gap-4 gap-y-8 justify-center items-center">
                 {
-                    arr.map((elem)=>(
-                        <FormComp/>
+                    formData && sliceFormList.map((elem)=>(
+                        <FormComp key={elem._id} data={elem}/>
                     ))
                 }
                 </div>
-                <div className="h-10 flex justify-center items-center gap-4 mt-8">
-                <button className="p-1 px-6 border-indigo-300 border-2 rounded-lg hover:bg-indigo-300 hover:shadow-xl hover:text-white">Prev</button>
-                <button className="p-1 px-6 border-indigo-300 border-2 rounded-lg  hover:bg-indigo-300 hover:shadow-xl hover:text-white">Next</button>
+                <div>
+                    {
+                        sliceFormList && sliceFormList.length>0 ? <Pagination dataLen={formData.length} currentPage={currentPage} itemsPerPage={itemsPerPage} onPageChange={onPageChange}/>:''
+                    }
+                    
+                    </div>
                 </div>
             </div>
-        </>
-
-    )
+            // load spinner
+                :<div className='spinner'>
+                    <article></article>
+                    <p className='text-black opacity-75 mt-5'>Data is loading.... Please Wait....!</p>
+                </div>
+            }
+            </>
+        )
 };
 
 export default AllForms;

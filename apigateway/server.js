@@ -55,5 +55,8 @@ app.listen(port||3001, ()=>{
     console.log(`API_Gateway is Running at: ${port}`.bgWhite.blue)
 });
 
+app.get('/', (req, res)=>{
+    res.send("<h1>This is API GATEWAY Server</h1>")
+})
 
 

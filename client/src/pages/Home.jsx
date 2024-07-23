@@ -5,6 +5,7 @@ import AllForms from '../components/AllForms'
 const Home = () => {
   const [role, setRole]=useState('')
 
+// extracting role and conditional rendering
 useEffect(()=>{
   const adminItem=localStorage.getItem("adminData")
   if(adminItem){
@@ -15,7 +16,7 @@ useEffect(()=>{
 
   return (
     <>
-      <div className='bg-gray-100 h-screen'>
+      <div className='bg-gray-100 h-full'>
         <nav className='bg-indigo-400 py-1 text-white w-full'>
             <ul className='flex justify-between items-center '> 
               <Link to="/"><li className='pl-8 font-bold text-xl hover:cursor-pointer'>MRSOFT</li></Link>

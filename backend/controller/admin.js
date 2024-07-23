@@ -22,6 +22,7 @@ export const superAdminCreation = async(req,res)=>{
             let email=req.body.email
             let password=req.body.password
             let username=req.body.username
+            
             let adminExist= await SuperAdmin.findOne({email})
             if(adminExist){
                 return res.status(400).send({status:false, message:"Admin already exist"})

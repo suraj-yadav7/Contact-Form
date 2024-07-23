@@ -3,7 +3,7 @@ import { contactFormCreate, getAllContactForms, contactFormDelete } from '../con
 import { authorization } from '../middlewares/authorization.js'
 
 const contactRouter = express.Router()
-
+// Form routing, controller
 contactRouter.post("/create", contactFormCreate)
 contactRouter.get("/getAll", getAllContactForms)
 contactRouter.delete("/delete", authorization, contactFormDelete)

@@ -1,5 +1,6 @@
 import { ContactForm } from "../models/contactForm.model.js"
 
+// Creating new form
 export const contactFormCreate = async(req, res)=>{
     try{
         const {fullName, email, phone, message} = req.body
@@ -18,6 +19,7 @@ export const contactFormCreate = async(req, res)=>{
     }
 };
 
+// Fetching all forms form collections
 export const getAllContactForms=async(req, res)=>{
     try{
         let allForms = await ContactForm.find({}).limit(20)
@@ -34,6 +36,7 @@ export const getAllContactForms=async(req, res)=>{
     }
 };
 
+//Delete single form 
 export const contactFormDelete = async(req, res)=>{
     try{
         const {formId} = req.body
